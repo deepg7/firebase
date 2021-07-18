@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Meet</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src='https://meet.jit.si/external_api.js'></script>
+    <script>
+       
+        var apiObj = null;
+        const rname = 'hsdbBFjsDVbS';
+        $(document).ready(function(){
+            const domain = 'meet.jit.si';
+            const options = {
+                roomName : rname ,
+                width: 1500,
+                height: 800,
+                parentNode: document.querySelector('#meet'),
+                userInfo: {
+                displayName: 'Tr'
+            },
+            configOverwrite:{
+            doNotStoreRoom: true,
+            startVideoMuted: 0,
+            startWithVideoMuted: true,
+            startWithAudioMuted: true,
+            enableWelcomePage: false,
+            prejoinPageEnabled: false,
+            disableRemoteMute: true,
+            remoteVideoMenu: {
+                disableKick: true
+            },
+        }
+        };
+        apiObj = new JitsiMeetExternalAPI(domain, options);
+        $("#btnHangup").on('click', function () {
+            apiObj.executeCommand('hangup');
+            window.alert(rname);
+            $.ajax({
+                method: "POST",
+                url: "/users/delete",
+                data: {"userId": userId},
+            });    
+        });
+
+        })
+
+    
+    </script>
+</head>
+<body>
+    <style>
+        img{
+            height: 92px;
+            width: 200px;
+        }
+    </style>
+    <img src="Group 20.png">
+    <div class="container">
+        <div id='meet'></div>
+        <div id="toolbox" class="toolbox">
+            <button id='btnHangup'>Hangup</button>
+        </div>
+    </div>
+</body>
+</html>
